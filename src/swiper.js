@@ -1,6 +1,10 @@
 window.Webflow ||= [];
 window.Webflow.push(() => {
+
+
+
   document.querySelectorAll('.testimonial_component').forEach((component) => {
+    
     const testimonialCarousel = new Swiper(component.querySelector('.testimonial_container'), {
       wrapperClass: 'testimonial_wrapper',
       slideClass: 'testimonial_slide',

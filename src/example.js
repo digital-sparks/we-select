@@ -4,32 +4,26 @@ window.Webflow.push(() => {
   window.fsAttributes.push([
     'cmsfilter',
     (filterInstances) => {
-      console.log('cmsload Successfully loaded!');
+      const reset = document.querySelector(
+        '.industry-filter .fs-combobox_list [fs-cmsfilter-element="clear"][fs-cmsfilter-clear="industry"]'
+      );
+      reset.classList.add('w--current');
 
-      setTimeout(() => {
-        const reset = document.querySelector(
-          '.industry-filter .fs-combobox_list [fs-cmsfilter-element="clear"][fs-cmsfilter-clear="industry"]'
-        );
+      reset.addEventListener('click', () => {
         reset.classList.add('w--current');
 
-        const options = document.querySelectorAll(
-          '.industry-filter [fs-combobox-element="option-template"]'
-        );
+        $('.industry-filter [fs-combobox-element="option-template"]').removeClass('w--current');
+      });
 
-        reset.addEventListener('click', () => {
-          reset.classList.add('w--current');
-
-          options.forEach((item) => {
-            item.classList.remove('w--current');
-          });
-        });
-
-        options.forEach((item) => {
-          item.addEventListener('click', () => {
-            reset.classList.remove('w--current');
-          });
-        });
-      }, 1000);
+      $(document).on(
+        'click',
+        '.industry-filter [fs-combobox-element="option-template"]',
+        function (item) {
+          const id = item.currentTarget.getAttribute('id');
+          document.getElementById(id).classList.add('w--current');
+          reset.classList.remove('w--current');
+        }
+      );
     },
   ]);
 });
