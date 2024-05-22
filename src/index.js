@@ -51,9 +51,10 @@ window.Webflow.push(() => {
                 jobtitle: 'Job Title',
                 phone: 'Phone',
                 department: 'Department',
-                // 'LEGAL_CONSENT.processing': 'Custom consent text 1',
-                // 'LEGAL_CONSENT.subscription_type_10840013': 'Custom consent text 2',
-                // 'LEGAL_CONSENT.subscription_type_6662082': 'Custom consent text 3',
+                book_a_free_consultation:
+                  'I want to book a free consultation on how We Select can help my company with Employer Branding.',
+                'LEGAL_CONSENT.processing': `I agree to We Select's privacy policy.`,
+                'LEGAL_CONSENT.subscription_type_6662082': `I agree to receive invitations to events, e-books and other insights.`,
               },
             },
             sv: {
@@ -65,9 +66,10 @@ window.Webflow.push(() => {
                 jobtitle: 'Jobbtitel',
                 phone: 'Mobilnummer',
                 department: 'Avdelning',
-                // 'LEGAL_CONSENT.processing': 'Jag godkänner We Selects integritetspolicy.',
-                // 'LEGAL_CONSENT.subscription_type_10840013':
-                //   'Jag godkänner att ta emot inbjudningar till event, e-books och övriga insikter.',
+                book_a_free_consultation:
+                  'Boka kostnadsfri rådgivning om hur vi kan hjälpa ditt företag med Employer Branding.',
+                'LEGAL_CONSENT.processing': `Jag godkänner We Selects integritetspolicy.`,
+                'LEGAL_CONSENT.subscription_type_6662082': `Jag godkänner att ta emot inbjudningar till event, e-books och övriga insikter.`,
               },
             },
           },
@@ -85,14 +87,29 @@ window.Webflow.push(() => {
       const marqueeWidth = item.offsetWidth;
       const listWidth = list.scrollWidth;
 
-      const duration = (listWidth / marqueeWidth) * 100; // Adjust the multiplier as needed
+      const baseDuration = (listWidth / marqueeWidth) * 100; // Adjust the multiplier as needed
 
       let tl = gsap.timeline({ repeat: -1, onReverseComplete: () => tl.progress(1) });
 
-      tl.to(item.querySelectorAll('.marquee-list'), {
-        xPercent: i % 2 ? 100 : -100,
-        duration: duration,
-        ease: 'none',
+      let mm = gsap.matchMedia();
+
+      mm.add('(max-width: 768px)', () => {
+        // Adjust the duration for smaller devices
+        const smallDeviceDuration = baseDuration * 0.25; // Adjust the factor as needed
+        tl.to(item.querySelectorAll('.marquee-list'), {
+          xPercent: i % 2 ? 100 : -100,
+          duration: smallDeviceDuration,
+          ease: 'none',
+        });
+      });
+
+      mm.add('(min-width: 769px)', () => {
+        // Use the base duration for larger devices
+        tl.to(item.querySelectorAll('.marquee-list'), {
+          xPercent: i % 2 ? 100 : -100,
+          duration: baseDuration,
+          ease: 'none',
+        });
       });
     }
   });
