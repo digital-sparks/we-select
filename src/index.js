@@ -84,10 +84,11 @@ window.Webflow.push(() => {
 
     if (list) {
       item.append(list.cloneNode(true));
+      item.append(list.cloneNode(true));
       const marqueeWidth = item.offsetWidth;
       const listWidth = list.scrollWidth;
 
-      const baseDuration = (listWidth / marqueeWidth) * 100; // Adjust the multiplier as needed
+      const baseDuration = (listWidth / marqueeWidth) * 150; // Adjust the multiplier as needed
 
       let tl = gsap.timeline({ repeat: -1, onReverseComplete: () => tl.progress(1) });
 
@@ -114,6 +115,43 @@ window.Webflow.push(() => {
     }
   });
   // ————— LOGO SLIDER MARQUEE ————— //
+
+  // ————— JOB ROLE MARQUEE ————— //
+  document.querySelectorAll('.job-marquee_component').forEach((item, i) => {
+    const list = item.querySelector('.job_marquee-list');
+
+    if (list) {
+      item.append(list.cloneNode(true));
+      const marqueeWidth = item.offsetWidth;
+      const listWidth = list.scrollWidth;
+
+      const baseDuration = (listWidth / marqueeWidth) * 150; // Adjust the multiplier as needed
+
+      let tl = gsap.timeline({ repeat: -1, onReverseComplete: () => tl.progress(1) });
+
+      let mm = gsap.matchMedia();
+
+      mm.add('(max-width: 768px)', () => {
+        // Adjust the duration for smaller devices
+        const smallDeviceDuration = baseDuration * 0.25; // Adjust the factor as needed
+        tl.to(item.querySelectorAll('.job_marquee-list'), {
+          xPercent: i % 2 ? 100 : -100,
+          duration: smallDeviceDuration,
+          ease: 'none',
+        });
+      });
+
+      mm.add('(min-width: 769px)', () => {
+        // Use the base duration for larger devices
+        tl.to(item.querySelectorAll('.job_marquee-list'), {
+          xPercent: i % 2 ? 100 : -100,
+          duration: baseDuration,
+          ease: 'none',
+        });
+      });
+    }
+  });
+  // ————— JOB ROLE MARQUEEE ————— //
 
   // ————— GSAP HOME HERO ————— //
   if (document.querySelector('.hero_image-phone')) {
