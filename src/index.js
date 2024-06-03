@@ -37,6 +37,7 @@ window.Webflow.push(() => {
           onFormSubmitted: () => {
             form.style.display = 'none';
             form.nextSibling.style.display = 'flex';
+            form.nextSibling.scrollIntoView({ behavior: 'instant' });
           },
           onFormReady: () => {
             ScrollTrigger.refresh();
@@ -97,7 +98,7 @@ window.Webflow.push(() => {
 
         mm.add('(max-width: 768px)', () => {
           // Adjust the duration for smaller devices
-          const smallDeviceDuration = baseDuration * 0.25; // Adjust the factor as needed
+          const smallDeviceDuration = baseDuration * 0.15; // Adjust the factor as needed
           tl.to(item.querySelectorAll('.marquee-list'), {
             xPercent: i % 2 ? 100 : -100,
             duration: smallDeviceDuration,
